@@ -1,3 +1,5 @@
 **/.ipynb_checkpoints/
 *.auth
 data/timelines/
+public_users_timelines_2.csv
+public_users_timelines_1.csv
