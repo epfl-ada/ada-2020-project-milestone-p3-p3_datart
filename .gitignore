@@ -1,3 +1,8 @@
+# Checkpoints
 **/.ipynb_checkpoints/
+# Bearer token
 *.auth
-data/timelines/
+
+# Old timeline data files
+data_old/timelines/
+data_old/tl_cp/
