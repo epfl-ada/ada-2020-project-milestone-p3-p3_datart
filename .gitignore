@@ -6,3 +6,6 @@
 # Old timeline data files
 data_old/timelines/
 data_old/tl_cp/
+
+public_users_timelines_2.csv
+public_users_timelines_1.csv
