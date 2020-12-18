@@ -1,66 +1,68 @@
-# How topics influence retweets
+# The bigger your circle, the more you post?
 
 ---
 
 ## Abstract
-
-While the paper examines the exposure hypothesis for all topics, we propose to analyze and compare political and food related tweets. To do so, we plan to obtain egos, alters and their timelines from Twitter’s API by generating $3\times30,000$ random numbers in a range from $0$ to $3,000,000,000$. Then, we intend to identify egos’ retweets using official RT, classify tweets by topics based on hashtags (and keywords if the dataset is lacking content) and create a follower/followee graph. To calculate the probability of retweeting alters’ tweets by egos we will use a more solid approach then what is described in the paper “Differences in the Mechanics of Information Diffusion Across Topics” where the probability is equal to the number of users that were k times exposed to a hashtag and retweeted before the ($k+1$)-th exposure, divided by the number of users that were k-times exposed to the hashtag. Finally, we plan to visualize results as well as analyze the probability by breaking down users based on betweenness, clustering coefficient and number of followees.
-
+Replication is an important condition for scientific findings. While the Liang and al. article examines the attention and productivity proposition using a dataset with tweets up to 2015, we propose to analyze and compare using a new dataset collected in 2020 as the behavior of users evolves. The hypothesis states that Twitter users who experience attention from more people will post more often than those who experience less attention. To validate this hypothesis, we plan to obtain ego profiles and their timelines from Twitter’s API by generating $3\times30,000$ random numbers in a range from $0$ to $3,000,000,000$. Then, we intend to identify egos’ friends using user mentions, illustrate the dependence of average number of tweets and total number of tweets from number of followees, followers and friends and fit a logistic regression model to obtain statistics. The Pearson correlation between these features will also be computed to be compared.
+  
 ## Research Questions
 
-1. Is there a significant difference between the probability of retweeting when the tweet is about food and when it is about politics ?
-2. Is there a significant difference in the number of times a tweet is retweeted depending on whether it is about food or politics ?
-3. Is there a relation between user betweenness, size of cluster or number of friends with the retweet probabilities ?
-
+1. Is there a correlation between average number of tweets and number of followers/followees/friends?
+2. Is there a correlation between total number of tweets and number of followers/followees/friends?
+3. Is there a saturation point for the number of total posts as a function of the number of followers/followees/friends?
+ 
 ## Proposed dataset
 
-Self-collected (with the Twitter API) ego and alter timelines with all tweet fields from the [**GET /2/users** endpoint](https://developer.twitter.com/en/docs/twitter-api/users/lookup/api-reference/get-users) and all user fields except for `profile_image_url`.
+Self-collected (with the Twitter API) egos’ profiles from the [**GET /2/users** endpoint](https://developer.twitter.com/en/docs/twitter-api/users/lookup/api-reference/get-users) and egos’ timelines from the [**GET /1.1/statuses/user_timeline.json** endpoint](https://developer.twitter.com/en/docs/twitter-api/v1/tweets/timelines/api-reference/get-statuses-user_timeline).
 
 ## Methods
+We will approach the problem of hypothesis validation conceptually. It means that we are not merely going to reproduce previous findings but replicate former conceptual claims using independent data. In this way, all analyses in the extension will be based on the random sample of ego users.     
 
 ### Data collection
 
-We will sign up for Twitter’s API to collect data. We will generate $3\times30,000$ random numbers in a range from $0$ to $3,000,000,000$ as in the paper and use the [**GET /2/users** endpoint](https://developer.twitter.com/en/docs/twitter-api/users/lookup/api-reference/get-users) to collect active and public user information with all tweet fields and all user fields except for profile_image_url.
+We will sign up for Twitter’s API to collect data. We will generate $3\times30,000$ random numbers in a range from $0$ to $3,000,000,000$ as in the paper and use the [**GET /2/users** endpoint](https://developer.twitter.com/en/docs/twitter-api/users/lookup/api-reference/get-users) to collect active and public user information. We will then pull user mentions from the egos’ tweets using the [**GET /1.1/statuses/user_timeline.json** endpoint](https://developer.twitter.com/en/docs/twitter-api/v1/tweets/timelines/api-reference/get-statuses-user_timeline).
 
-### Building the network
+### Data processing
+We will clean egos’ profiles data to extract public metrics (including follower count, followee count and tweet count). We will retain valid public egos’ profiles with at least one alter (follower or followee) for the first two graphs and valid public egos’ timelines of users with at least one alter and one tweet for the last graph.
 
-We will use networkx to build a directed network of followers  in which nodes are users (egos and alters) and edges are the following relationships (without the following relationships among alters). Next, we will build another network where relationships among alters of active egos are included.
+### Data analysis 
+We will explore data and dependence, run basic statistic tests and plot user distribution.
 
-### Calculating retweet probability
+### Data visualization
+We will replicate Fig 3. Content productivity and attention received. The average number of tweets as a function of (A) the number of followers, (B) the number of followees, and (C) the number of friends. Friend here is defined as a user who has been mentioned at least twice in an ego’s timeline.
+ 
+### Observational studies
+We will fit local  regressions and perform a number of statistical tests
 
-For each ego, we will count the number of followees who have retweeted a post (exposures) on a certain topic at a certain date. We will get the information like this: an ego $i$ was exposed to $200$ posts about this topic only once, among which $i$ retweeted $50$ (probability is $50/200 = 25\%$); at the same time, $i$ was exposed to $100$ posts about this topic twice, among which $i$ retweeted $50$ ($probability = 50\%$); … Finally, we will calculate a sequence of probability for each ego. (Same procedure as in the paper.) If there is sufficient data, we will apply a t-test to identify whether the distribution of retweets for each exposure count is significantly different from one topic to the other. We will also try to compare the distribution of retweet probabilities between topics.
+### Results interpretation
 
-### Community detection
-
-We will use the second ego networks to compute clustering coefficients and betweenness of the active egos.
-
-### Data analysis
-
-We will compare the retweet probabilities based on betweenness, number of followers and clustering for each topic, much like in *Figure 6* in the paper.
+We will interpret the significance of findings and compare the graphs, correlation and statistics with other scientific papers, particularly with Liang and al., Huberman and al. and Kwak and al.
 
 ## Proposed timeline
 
 ### Week 1
 
-Downloading the dataset with the Twitter API. Building the network.
+Downloading the dataset with the Twitter API. 
 
 ### Week 2
 
-Calculating retweet probability and community detection.
+Processing, analysing data and making the visualization in the Notebook.
 
 ### Week 3
 
-Making the visualization in the Notebook, writing the report, making the video.
+Cleaning the Notebook and GitHub, writing the report and making the video.
 
 ## Organization within the team
 
-**Jérémy** will produce the random IDs and **Jules** will download the data with the help of **Jérémy** (if his request for an account is accepted) in week 1 while **Kate** sets up the code for building the network.
-
-**Jules** and **Jérémy** will compute retweet probability while **Kate** does the community detection in week 2.
-
-**Kate** will produce the visualization while **Jérémy** makes the pitch video and all three will collaborate on the report.
+In week 1 **Jérémy** will produce the random IDs and **Jules** will download the data with the help of **Jérémy** because **Kate** didn’t get the access to the Twitter API.
+In week 2 **Kate** and **Jérémy**  will produce the visualization and **Kate** will fit the linear regression and compare with findings of other articles.
+In week 3 **Jules** will clean the github and all three will collaborate on the report and make the pitch video.
 
 ## Questions for TAs (optional)
 
-- In the event where we do not have enough data to perform a t-test on the distributions for each exposure count, how can we test whether the distributions of exposures are significantly different from one topic to the next ?
+- Remark: we did not have time for getting alters’ timelines, thus we changed the topic of creatio extension.
 - Kate's application to access the Twitter API was rejected twice without an explanation. Could you help us get access for her ?
+
+## Actual contributions
+
+As in *Organization within the team*, except that we were expecting to extend the exposure hypothesis so Jules spent the first week trying to pull ego profiles, timelines and follower and followee IDs. Having realized this would not be possible in the imparted time frame, we switched to the currently described project.
