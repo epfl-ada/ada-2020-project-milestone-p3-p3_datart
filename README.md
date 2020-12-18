@@ -58,11 +58,6 @@ In week 1 **Jérémy** will produce the random IDs and **Jules** will download t
 In week 2 **Kate** and **Jérémy**  will produce the visualization and **Kate** will fit the linear regression and compare with findings of other articles.
 In week 3 **Jules** will clean the github and all three will collaborate on the report and make the pitch video.
 
-## Questions for TAs (optional)
-
-- Remark: we did not have time for getting alters’ timelines, thus we changed the topic of creatio extension.
-- Kate's application to access the Twitter API was rejected twice without an explanation. Could you help us get access for her ?
-
 ## Actual contributions
 
 As in *Organization within the team*, except that we were expecting to extend the exposure hypothesis so Jules spent the first week trying to pull ego profiles, timelines and follower and followee IDs. Having realized this would not be possible in the imparted time frame, we switched to the currently described project.
